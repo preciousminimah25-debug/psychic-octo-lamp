@@ -1,0 +1,25 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+
+const app = express();
+
+app.use(express.json());
+app.use(cors());
+app.use(express.static("client"));
+
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB connected"))
+.catch(err => console.log(err));
+
+// API test
+app.get("/api", (req, res) => {
+  res.json({ message: "Trade World Signals API running" });
+});
+
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});
